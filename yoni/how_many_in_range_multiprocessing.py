@@ -44,22 +44,6 @@ def non_parallel_processing():
     print(results[:10])
     print(f"Non parallel processing took {processing_time.total_seconds()}")
 
-def parallel_processing_multiprocessing_process():
-    # Non parallel processing
-    results = []
-    processes = []
-    start_time = datetime.now()
-    for row in data:
-        p = mp.Process(target=howmany_within_range, args=(row,))
-        processes.append(p)
-        p.start()
-
-    for process in processes:
-        process.join()
-    processing_time = datetime.now() - start_time
-    print(results[:10])
-    print(f"Parallel processing using multiprocess Process took {processing_time.total_seconds()}")
-
 def parallel_processing_pool_apply(num_of_processes=mp.cpu_count()):
     # Synchronize parallel processing - using pool.apply
     # Step 1: Init multiprocessing.Pool()
@@ -222,7 +206,6 @@ def parallel_processing_pool_starmap_async_sorting(num_of_processes=mp.cpu_count
     print(f"Asynchronous parallel using pool.starmap_async without callback with sorting processing took {processing_time.total_seconds()} with {num_of_processes} number of processes")
 
 non_parallel_processing()
-# parallel_processing_multiprocessing_process()
 parallel_processing_pool_apply()
 parallel_processing_pool_apply(2)
 parallel_processing_pool_apply(1)
@@ -232,8 +215,6 @@ parallel_processing_pool_map(1)
 parallel_processing_pool_starmap()
 parallel_processing_pool_starmap(2)
 parallel_processing_pool_starmap(1)
-# parallel_processing_pool_apply_async_callback()
-# parallel_processing_pool_apply_async_callback_sorting()
 parallel_processing_pool_apply_async_no_callback()
 parallel_processing_pool_apply_async_no_callback(2)
 parallel_processing_pool_apply_async_no_callback(1)
